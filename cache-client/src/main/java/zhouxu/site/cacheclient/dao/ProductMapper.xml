@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="zhouxu.site.cacheclient.dao.ProductMapper" >
+  <resultMap id="BaseResultMap" type="zhouxu.site.cacheclient.pojo.Product" >
+    <id column="PRODUCT_ID" property="productId" jdbcType="INTEGER" />
+    <result column="PRODUCT_NAME" property="productName" jdbcType="VARCHAR" />
+    <result column="PRODUCT_DESC" property="productDesc" jdbcType="VARCHAR" />
+    <result column="PRODUCT_IMG" property="productImg" jdbcType="VARCHAR" />
+    <result column="PRODUCT_PRICE" property="productPrice" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    PRODUCT_ID, PRODUCT_NAME, PRODUCT_DESC, PRODUCT_IMG, PRODUCT_PRICE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="zhouxu.site.cacheclient.pojo.ProductExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from product
+    where PRODUCT_ID = #{productId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from product
+    where PRODUCT_ID = #{productId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="zhouxu.site.cacheclient.pojo.ProductExample" >
+    delete from product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="zhouxu.site.cacheclient.pojo.Product" >
+    insert into product (PRODUCT_ID, PRODUCT_NAME, PRODUCT_DESC, 
+      PRODUCT_IMG, PRODUCT_PRICE)
+    values (#{productId,jdbcType=INTEGER}, #{productName,jdbcType=VARCHAR}, #{productDesc,jdbcType=VARCHAR}, 
+      #{productImg,jdbcType=VARCHAR}, #{productPrice,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="zhouxu.site.cacheclient.pojo.Product" >
+    insert into product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="productId != null" >
+        PRODUCT_ID,
+      </if>
+      <if test="productName != null" >
+        PRODUCT_NAME,
+      </if>
+      <if test="productDesc != null" >
+        PRODUCT_DESC,
+      </if>
+      <if test="productImg != null" >
+        PRODUCT_IMG,
+      </if>
+      <if test="productPrice != null" >
+        PRODUCT_PRICE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="productId != null" >
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="productName != null" >
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productDesc != null" >
+        #{productDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="productImg != null" >
+        #{productImg,jdbcType=VARCHAR},
+      </if>
+      <if test="productPrice != null" >
+        #{productPrice,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="zhouxu.site.cacheclient.pojo.ProductExample" resultType="java.lang.Integer" >
+    select count(*) from product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update product
+    <set >
+      <if test="record.productId != null" >
+        PRODUCT_ID = #{record.productId,jdbcType=INTEGER},
+      </if>
+      <if test="record.productName != null" >
+        PRODUCT_NAME = #{record.productName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productDesc != null" >
+        PRODUCT_DESC = #{record.productDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productImg != null" >
+        PRODUCT_IMG = #{record.productImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productPrice != null" >
+        PRODUCT_PRICE = #{record.productPrice,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update product
+    set PRODUCT_ID = #{record.productId,jdbcType=INTEGER},
+      PRODUCT_NAME = #{record.productName,jdbcType=VARCHAR},
+      PRODUCT_DESC = #{record.productDesc,jdbcType=VARCHAR},
+      PRODUCT_IMG = #{record.productImg,jdbcType=VARCHAR},
+      PRODUCT_PRICE = #{record.productPrice,jdbcType=DECIMAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="zhouxu.site.cacheclient.pojo.Product" >
+    update product
+    <set >
+      <if test="productName != null" >
+        PRODUCT_NAME = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productDesc != null" >
+        PRODUCT_DESC = #{productDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="productImg != null" >
+        PRODUCT_IMG = #{productImg,jdbcType=VARCHAR},
+      </if>
+      <if test="productPrice != null" >
+        PRODUCT_PRICE = #{productPrice,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where PRODUCT_ID = #{productId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="zhouxu.site.cacheclient.pojo.Product" >
+    update product
+    set PRODUCT_NAME = #{productName,jdbcType=VARCHAR},
+      PRODUCT_DESC = #{productDesc,jdbcType=VARCHAR},
+      PRODUCT_IMG = #{productImg,jdbcType=VARCHAR},
+      PRODUCT_PRICE = #{productPrice,jdbcType=DECIMAL}
+    where PRODUCT_ID = #{productId,jdbcType=INTEGER}
+  </update>
+</mapper>
