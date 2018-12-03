@@ -1,4 +1,4 @@
-package zhouxu.site.cacheclient.constants;
+package zhouxu.site.cacheserver.constants;
 
 /**
  * Created with IntelliJ IDEA.

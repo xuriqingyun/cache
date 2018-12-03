@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="zhouxu.site.cacheclient.dao.OrderMapper" >
-  <resultMap id="BaseResultMap" type="zhouxu.site.cacheclient.pojo.Order" >
-    <id column="ORDER_ID" property="orderId" jdbcType="INTEGER" />
-    <result column="PRODUCT_ID" property="productId" jdbcType="INTEGER" />
-    <result column="COUNT" property="count" jdbcType="INTEGER" />
-    <result column="TOTAL" property="total" jdbcType="DOUBLE" />
-    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+<mapper namespace="zhouxu.site.cacheserver.dao.ProductMapper" >
+  <resultMap id="BaseResultMap" type="zhouxu.site.cacheserver.pojo.Product" >
+    <id column="PRODUCT_ID" property="productId" jdbcType="INTEGER" />
+    <result column="PRODUCT_NAME" property="productName" jdbcType="VARCHAR" />
+    <result column="PRODUCT_DESC" property="productDesc" jdbcType="VARCHAR" />
+    <result column="PRODUCT_IMG" property="productImg" jdbcType="VARCHAR" />
+    <result column="PRODUCT_PRICE" property="productPrice" jdbcType="DECIMAL" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -67,16 +67,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    ORDER_ID, PRODUCT_ID, COUNT, TOTAL, STATUS
+    PRODUCT_ID, PRODUCT_NAME, PRODUCT_DESC, PRODUCT_IMG, PRODUCT_PRICE
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="zhouxu.site.cacheclient.pojo.OrderExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="zhouxu.site.cacheserver.pojo.ProductExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     'true' as QUERYID,
     <include refid="Base_Column_List" />
-    from order
+    from product
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -87,85 +87,85 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from order
-    where ORDER_ID = #{orderId,jdbcType=INTEGER}
+    from product
+    where PRODUCT_ID = #{productId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from order
-    where ORDER_ID = #{orderId,jdbcType=INTEGER}
+    delete from product
+    where PRODUCT_ID = #{productId,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="zhouxu.site.cacheclient.pojo.OrderExample" >
-    delete from order
+  <delete id="deleteByExample" parameterType="zhouxu.site.cacheserver.pojo.ProductExample" >
+    delete from product
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="zhouxu.site.cacheclient.pojo.Order" >
-    insert into order (ORDER_ID, PRODUCT_ID, COUNT, 
-      TOTAL, STATUS)
-    values (#{orderId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, #{count,jdbcType=INTEGER}, 
-      #{total,jdbcType=DOUBLE}, #{status,jdbcType=VARCHAR})
+  <insert id="insert" parameterType="zhouxu.site.cacheserver.pojo.Product" >
+    insert into product (PRODUCT_ID, PRODUCT_NAME, PRODUCT_DESC, 
+      PRODUCT_IMG, PRODUCT_PRICE)
+    values (#{productId,jdbcType=INTEGER}, #{productName,jdbcType=VARCHAR}, #{productDesc,jdbcType=VARCHAR}, 
+      #{productImg,jdbcType=VARCHAR}, #{productPrice,jdbcType=DECIMAL})
   </insert>
-  <insert id="insertSelective" parameterType="zhouxu.site.cacheclient.pojo.Order" >
-    insert into order
+  <insert id="insertSelective" parameterType="zhouxu.site.cacheserver.pojo.Product" >
+    insert into product
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="orderId != null" >
-        ORDER_ID,
-      </if>
       <if test="productId != null" >
         PRODUCT_ID,
       </if>
-      <if test="count != null" >
-        COUNT,
+      <if test="productName != null" >
+        PRODUCT_NAME,
       </if>
-      <if test="total != null" >
-        TOTAL,
+      <if test="productDesc != null" >
+        PRODUCT_DESC,
       </if>
-      <if test="status != null" >
-        STATUS,
+      <if test="productImg != null" >
+        PRODUCT_IMG,
+      </if>
+      <if test="productPrice != null" >
+        PRODUCT_PRICE,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="orderId != null" >
-        #{orderId,jdbcType=INTEGER},
-      </if>
       <if test="productId != null" >
         #{productId,jdbcType=INTEGER},
       </if>
-      <if test="count != null" >
-        #{count,jdbcType=INTEGER},
+      <if test="productName != null" >
+        #{productName,jdbcType=VARCHAR},
       </if>
-      <if test="total != null" >
-        #{total,jdbcType=DOUBLE},
+      <if test="productDesc != null" >
+        #{productDesc,jdbcType=VARCHAR},
       </if>
-      <if test="status != null" >
-        #{status,jdbcType=VARCHAR},
+      <if test="productImg != null" >
+        #{productImg,jdbcType=VARCHAR},
+      </if>
+      <if test="productPrice != null" >
+        #{productPrice,jdbcType=DECIMAL},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="zhouxu.site.cacheclient.pojo.OrderExample" resultType="java.lang.Integer" >
-    select count(*) from order
+  <select id="countByExample" parameterType="zhouxu.site.cacheserver.pojo.ProductExample" resultType="java.lang.Integer" >
+    select count(*) from product
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update order
+    update product
     <set >
-      <if test="record.orderId != null" >
-        ORDER_ID = #{record.orderId,jdbcType=INTEGER},
-      </if>
       <if test="record.productId != null" >
         PRODUCT_ID = #{record.productId,jdbcType=INTEGER},
       </if>
-      <if test="record.count != null" >
-        COUNT = #{record.count,jdbcType=INTEGER},
+      <if test="record.productName != null" >
+        PRODUCT_NAME = #{record.productName,jdbcType=VARCHAR},
       </if>
-      <if test="record.total != null" >
-        TOTAL = #{record.total,jdbcType=DOUBLE},
+      <if test="record.productDesc != null" >
+        PRODUCT_DESC = #{record.productDesc,jdbcType=VARCHAR},
       </if>
-      <if test="record.status != null" >
-        STATUS = #{record.status,jdbcType=VARCHAR},
+      <if test="record.productImg != null" >
+        PRODUCT_IMG = #{record.productImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productPrice != null" >
+        PRODUCT_PRICE = #{record.productPrice,jdbcType=DECIMAL},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -173,40 +173,40 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update order
-    set ORDER_ID = #{record.orderId,jdbcType=INTEGER},
-      PRODUCT_ID = #{record.productId,jdbcType=INTEGER},
-      COUNT = #{record.count,jdbcType=INTEGER},
-      TOTAL = #{record.total,jdbcType=DOUBLE},
-      STATUS = #{record.status,jdbcType=VARCHAR}
+    update product
+    set PRODUCT_ID = #{record.productId,jdbcType=INTEGER},
+      PRODUCT_NAME = #{record.productName,jdbcType=VARCHAR},
+      PRODUCT_DESC = #{record.productDesc,jdbcType=VARCHAR},
+      PRODUCT_IMG = #{record.productImg,jdbcType=VARCHAR},
+      PRODUCT_PRICE = #{record.productPrice,jdbcType=DECIMAL}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="zhouxu.site.cacheclient.pojo.Order" >
-    update order
+  <update id="updateByPrimaryKeySelective" parameterType="zhouxu.site.cacheserver.pojo.Product" >
+    update product
     <set >
-      <if test="productId != null" >
-        PRODUCT_ID = #{productId,jdbcType=INTEGER},
+      <if test="productName != null" >
+        PRODUCT_NAME = #{productName,jdbcType=VARCHAR},
       </if>
-      <if test="count != null" >
-        COUNT = #{count,jdbcType=INTEGER},
+      <if test="productDesc != null" >
+        PRODUCT_DESC = #{productDesc,jdbcType=VARCHAR},
       </if>
-      <if test="total != null" >
-        TOTAL = #{total,jdbcType=DOUBLE},
+      <if test="productImg != null" >
+        PRODUCT_IMG = #{productImg,jdbcType=VARCHAR},
       </if>
-      <if test="status != null" >
-        STATUS = #{status,jdbcType=VARCHAR},
+      <if test="productPrice != null" >
+        PRODUCT_PRICE = #{productPrice,jdbcType=DECIMAL},
       </if>
     </set>
-    where ORDER_ID = #{orderId,jdbcType=INTEGER}
+    where PRODUCT_ID = #{productId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="zhouxu.site.cacheclient.pojo.Order" >
-    update order
-    set PRODUCT_ID = #{productId,jdbcType=INTEGER},
-      COUNT = #{count,jdbcType=INTEGER},
-      TOTAL = #{total,jdbcType=DOUBLE},
-      STATUS = #{status,jdbcType=VARCHAR}
-    where ORDER_ID = #{orderId,jdbcType=INTEGER}
+  <update id="updateByPrimaryKey" parameterType="zhouxu.site.cacheserver.pojo.Product" >
+    update product
+    set PRODUCT_NAME = #{productName,jdbcType=VARCHAR},
+      PRODUCT_DESC = #{productDesc,jdbcType=VARCHAR},
+      PRODUCT_IMG = #{productImg,jdbcType=VARCHAR},
+      PRODUCT_PRICE = #{productPrice,jdbcType=DECIMAL}
+    where PRODUCT_ID = #{productId,jdbcType=INTEGER}
   </update>
 </mapper>

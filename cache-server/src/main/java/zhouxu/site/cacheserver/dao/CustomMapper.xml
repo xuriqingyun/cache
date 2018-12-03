@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="zhouxu.site.cacheserver.dao.CustomMapper" >
+  <resultMap id="BaseResultMap" type="zhouxu.site.cacheserver.pojo.Custom" >
+    <id column="CUSTOM_ID" property="customId" jdbcType="INTEGER" />
+    <result column="CUSTOM_NAME" property="customName" jdbcType="VARCHAR" />
+    <result column="CUSTOM_SEX" property="customSex" jdbcType="CHAR" />
+    <result column="CUSTOM_PHONE" property="customPhone" jdbcType="VARCHAR" />
+    <result column="CUSTOM_ADDRESS" property="customAddress" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    CUSTOM_ID, CUSTOM_NAME, CUSTOM_SEX, CUSTOM_PHONE, CUSTOM_ADDRESS
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="zhouxu.site.cacheserver.pojo.CustomExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from custom
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from custom
+    where CUSTOM_ID = #{customId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from custom
+    where CUSTOM_ID = #{customId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="zhouxu.site.cacheserver.pojo.CustomExample" >
+    delete from custom
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="zhouxu.site.cacheserver.pojo.Custom" >
+    insert into custom (CUSTOM_ID, CUSTOM_NAME, CUSTOM_SEX, 
+      CUSTOM_PHONE, CUSTOM_ADDRESS)
+    values (#{customId,jdbcType=INTEGER}, #{customName,jdbcType=VARCHAR}, #{customSex,jdbcType=CHAR}, 
+      #{customPhone,jdbcType=VARCHAR}, #{customAddress,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="zhouxu.site.cacheserver.pojo.Custom" >
+    insert into custom
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="customId != null" >
+        CUSTOM_ID,
+      </if>
+      <if test="customName != null" >
+        CUSTOM_NAME,
+      </if>
+      <if test="customSex != null" >
+        CUSTOM_SEX,
+      </if>
+      <if test="customPhone != null" >
+        CUSTOM_PHONE,
+      </if>
+      <if test="customAddress != null" >
+        CUSTOM_ADDRESS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="customId != null" >
+        #{customId,jdbcType=INTEGER},
+      </if>
+      <if test="customName != null" >
+        #{customName,jdbcType=VARCHAR},
+      </if>
+      <if test="customSex != null" >
+        #{customSex,jdbcType=CHAR},
+      </if>
+      <if test="customPhone != null" >
+        #{customPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="customAddress != null" >
+        #{customAddress,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="zhouxu.site.cacheserver.pojo.CustomExample" resultType="java.lang.Integer" >
+    select count(*) from custom
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update custom
+    <set >
+      <if test="record.customId != null" >
+        CUSTOM_ID = #{record.customId,jdbcType=INTEGER},
+      </if>
+      <if test="record.customName != null" >
+        CUSTOM_NAME = #{record.customName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customSex != null" >
+        CUSTOM_SEX = #{record.customSex,jdbcType=CHAR},
+      </if>
+      <if test="record.customPhone != null" >
+        CUSTOM_PHONE = #{record.customPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customAddress != null" >
+        CUSTOM_ADDRESS = #{record.customAddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update custom
+    set CUSTOM_ID = #{record.customId,jdbcType=INTEGER},
+      CUSTOM_NAME = #{record.customName,jdbcType=VARCHAR},
+      CUSTOM_SEX = #{record.customSex,jdbcType=CHAR},
+      CUSTOM_PHONE = #{record.customPhone,jdbcType=VARCHAR},
+      CUSTOM_ADDRESS = #{record.customAddress,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="zhouxu.site.cacheserver.pojo.Custom" >
+    update custom
+    <set >
+      <if test="customName != null" >
+        CUSTOM_NAME = #{customName,jdbcType=VARCHAR},
+      </if>
+      <if test="customSex != null" >
+        CUSTOM_SEX = #{customSex,jdbcType=CHAR},
+      </if>
+      <if test="customPhone != null" >
+        CUSTOM_PHONE = #{customPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="customAddress != null" >
+        CUSTOM_ADDRESS = #{customAddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CUSTOM_ID = #{customId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="zhouxu.site.cacheserver.pojo.Custom" >
+    update custom
+    set CUSTOM_NAME = #{customName,jdbcType=VARCHAR},
+      CUSTOM_SEX = #{customSex,jdbcType=CHAR},
+      CUSTOM_PHONE = #{customPhone,jdbcType=VARCHAR},
+      CUSTOM_ADDRESS = #{customAddress,jdbcType=VARCHAR}
+    where CUSTOM_ID = #{customId,jdbcType=INTEGER}
+  </update>
+</mapper>

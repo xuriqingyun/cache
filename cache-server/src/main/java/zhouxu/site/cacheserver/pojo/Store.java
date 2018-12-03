@@ -1,4 +1,4 @@
-package zhouxu.site.cacheclient.pojo;
+package zhouxu.site.cacheserver.pojo;
 
 public class Store {
     private Integer productId;
